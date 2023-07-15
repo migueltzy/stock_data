@@ -377,37 +377,30 @@ def output_industry_bias(poolcode, factors, groups=3, date=end_date):
     writer.save()
     return
 
-# def main_func(poolcode, factors, groups=3, start_date=start_date, end_date=end_date):
-#     count_error = []
-#     count_empty = []
-#     for i in factors:
-#         temp = w.wsd('600519.SH', i, startDate=end_date, endDate=end_date).Data[0][0]
-#         if not temp:
-#             count_empty.append(i)
-#         if temp == 'CWSDService:invalid indicators':
-#             count_error.append(i)
-#
-#     if len(count_error) == len(count_empty) == 0:
-#         print('指标读取正常')
-#         start_time = time.perf_counter()
-#         output_factor_ret_ts(poolcode, factors, groups, start_date, end_date)
-#         print('时间序列数据已输出')
-#         output_factor_ret_cs(poolcode, factors, groups, start_date, end_date)
-#         print('截面数据已输出')
-#         output_industry_bias(poolcode, factors, groups, date=end_date)
-#         print('行业分布数据已输出')
-#         end_time = time.perf_counter()
-#         run_time = end_time - start_time
-#         print('运行时间:', run_time, 's')
-#     else:
-#         print('读取异常！\n空值指标为：{}\n无效值指标为：{}'.format(count_empty, count_error))
-#     return
-#
-#
-# if __name__ == '__main__':
-#     trade_day =[,,,]
-#     for i in trade_day:
-#         main_func('000905.SH', ['turn'])
+def main_func(poolcode, factors, groups=3, start_date=start_date, end_date=end_date):
+    count_error = []
+    count_empty = []
+    for i in factors:
+        temp = w.wsd('600519.SH', i, startDate=end_date, endDate=end_date).Data[0][0]
+        if not temp:
+            count_empty.append(i)
+        if temp == 'CWSDService:invalid indicators':
+            count_error.append(i)
 
-# w.wsd("600010.SH","yoyop", "2023-05-31", "2023-05-31")
+    if len(count_error) == len(count_empty) == 0:
+        print('指标读取正常')
+        start_time = time.perf_counter()
+        output_factor_ret_ts(poolcode, factors, groups, start_date, end_date)
+        print('时间序列数据已输出')
+        output_factor_ret_cs(poolcode, factors, groups, start_date, end_date)
+        print('截面数据已输出')
+        output_industry_bias(poolcode, factors, groups, date=end_date)
+        print('行业分布数据已输出')
+        end_time = time.perf_counter()
+        run_time = end_time - start_time
+        print('运行时间:', run_time, 's')
+    else:
+        print('读取异常！\n空值指标为：{}\n无效值指标为：{}'.format(count_empty, count_error))
+    return
+
 
